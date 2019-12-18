@@ -91,3 +91,6 @@ media/
 
 # Vscode
 .vscode/
+
+# project files
+pokemons.json
