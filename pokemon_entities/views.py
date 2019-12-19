@@ -68,7 +68,7 @@ def show_pokemon(request, pokemon_id):
     
     try:
         pokemon_next_evolution = pokemon.next_evolution.get()
-    except ObjectDoesNotExist:
+    except ObjectDoesNotExist, MultipleObjectsReturned:
         pokemon_next_evolution = None
 
     next_evolution = pokemon_next_evolution and {
