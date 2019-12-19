@@ -5,7 +5,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from django.http import request
 
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from .models import Pokemon, PokemonEntity
 
@@ -68,7 +68,7 @@ def show_pokemon(request, pokemon_id):
     
     try:
         pokemon_next_evolution = pokemon.next_evolution.get()
-    except ObjectDoesNotExist, MultipleObjectsReturned:
+    except (ObjectDoesNotExist, MultipleObjectsReturned):
         pokemon_next_evolution = None
 
     next_evolution = pokemon_next_evolution and {
