@@ -55,9 +55,8 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    try:
-        pokemon = Pokemon.objects.get(id=pokemon_id)
-    except ObjectDoesNotExist:
+    pokemon = Pokemon.objects.filter(id=pokemon_id).first()
+    if not pokemon:
         return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
 
     previous_evolution = pokemon.previous_evolution and {
