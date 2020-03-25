@@ -8,7 +8,7 @@ class Pokemon(models.Model):
     description = models.TextField(blank=True, default='', verbose_name='Описание')
     previous_evolution = models.ForeignKey(
         'self',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         blank=True, null=True,
         related_name='next_evolutions',
         verbose_name='Из кого эволюционировал')
