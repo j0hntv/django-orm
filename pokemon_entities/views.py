@@ -77,7 +77,7 @@ def show_pokemon(request, pokemon_id):
         'img_url': pokemon_next_evolutions.image.url
     }
 
-    pokemon = {
+    pokemon_features = {
             'pokemon_id': pokemon.id,
             'img_url': pokemon.image.url,
             'title_ru': pokemon.title,
@@ -89,8 +89,9 @@ def show_pokemon(request, pokemon_id):
         }
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
+    
+    pokemon_entities = pokemon.pokemon_entities.all()
 
-    pokemon_entities = PokemonEntity.objects.filter(pokemon__id=pokemon_id)
     for pokemon_entity in pokemon_entities:
         add_pokemon(
             folium_map,
@@ -101,4 +102,4 @@ def show_pokemon(request, pokemon_id):
         )
 
     return render(request, "pokemon.html", context={'map': folium_map._repr_html_(),
-                                                    'pokemon': pokemon})
+                                                    'pokemon': pokemon_features})
