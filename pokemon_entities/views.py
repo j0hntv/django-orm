@@ -67,14 +67,14 @@ def show_pokemon(request, pokemon_id):
     }
     
     try:
-        pokemon_next_evolution = pokemon.next_evolution.get()
+        pokemon_next_evolutions = pokemon.next_evolutions.get()
     except (ObjectDoesNotExist, MultipleObjectsReturned):
-        pokemon_next_evolution = None
+        pokemon_next_evolutions = None
 
-    next_evolution = pokemon_next_evolution and {
-        'title_ru': pokemon_next_evolution.title,
-        'pokemon_id': pokemon_next_evolution.id,
-        'img_url': pokemon_next_evolution.image.url
+    next_evolution = pokemon_next_evolutions and {
+        'title_ru': pokemon_next_evolutions.title,
+        'pokemon_id': pokemon_next_evolutions.id,
+        'img_url': pokemon_next_evolutions.image.url
     }
 
     pokemon = {
