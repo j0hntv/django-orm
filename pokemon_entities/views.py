@@ -65,12 +65,12 @@ def show_pokemon(request, pokemon_id):
         'img_url': pokemon.previous_evolution.image.url
     }
 
-    pokemon_next_evolutions = pokemon.next_evolutions.first()
+    pokemon_next_evolution = pokemon.next_evolutions.first()
 
-    next_evolution = pokemon_next_evolutions and {
-        'title_ru': pokemon_next_evolutions.title,
-        'pokemon_id': pokemon_next_evolutions.id,
-        'img_url': pokemon_next_evolutions.image.url
+    next_evolution = pokemon_next_evolution and {
+        'title_ru': pokemon_next_evolution.title,
+        'pokemon_id': pokemon_next_evolution.id,
+        'img_url': pokemon_next_evolution.image.url
     }
 
     pokemon_features = {
