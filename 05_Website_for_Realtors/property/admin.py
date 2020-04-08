@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Flat, Complaint
+from .models import Flat, Complaint, Owner
 
 
 @admin.register(Flat)
@@ -20,6 +20,12 @@ class FlatAdmin(admin.ModelAdmin):
     raw_id_fields = ('liked_by', )
 
 @admin.register(Complaint)
-class FlatAdmin(admin.ModelAdmin):
+class ComplaintAdmin(admin.ModelAdmin):
     raw_id_fields = ('flat', )
     list_display = ('user', 'flat', 'text')
+
+
+@admin.register(Owner)
+class OwnerAdmin(admin.ModelAdmin):
+    raw_id_fields = ('flats', )
+    list_display = ('owner', 'owner_phone_pure')
