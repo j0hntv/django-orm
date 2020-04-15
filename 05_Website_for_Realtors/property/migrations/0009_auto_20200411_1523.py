@@ -11,7 +11,6 @@ def add_relations_between_flats_and_owners(apps, schema_editor):
             owner_phone_pure=flat.owner_phone_pure,
             owners_phonenumber=flat.owners_phonenumber
         )
-        owner.flats.add(flat)
         flat.owners.add(owner)
 
 

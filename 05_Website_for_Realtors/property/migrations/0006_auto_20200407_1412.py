@@ -10,14 +10,14 @@ def convert_phonenumbers(apps, schema_editor):
     for flat in Flat.objects.all():
         number = flat.owners_phonenumber
         parsed_number = parse(number, 'RU')
-        if is_valid_number(parsed_number):
-            formatted_number = format_number(parsed_number, PhoneNumberFormat.E164)
-            flat.owner_phone_pure = formatted_number
-        else:
-            flat.owner_phone_pure = None
+        
+        if not is_valid_number(parsed_number):
+            continue
 
+        formatted_number = format_number(parsed_number, PhoneNumberFormat.E164)
+        flat.owner_phone_pure = formatted_number
         flat.save()
-
+            
 
 class Migration(migrations.Migration):
 

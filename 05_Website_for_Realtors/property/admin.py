@@ -7,8 +7,8 @@ class FlatAdmin(admin.ModelAdmin):
     search_fields = ('town', 'address', 'owner')
     readonly_fields = ('created_at', )
     list_display = (
-        'get_owners',
         'address',
+        'get_owners',
         'price',
         'new_building',
         'construction_year',
@@ -21,7 +21,7 @@ class FlatAdmin(admin.ModelAdmin):
 @admin.register(Complaint)
 class ComplaintAdmin(admin.ModelAdmin):
     raw_id_fields = ('flat', )
-    list_display = ('user', 'flat', 'text')
+    list_display = ('author', 'flat', 'text')
 
 
 @admin.register(Owner)
