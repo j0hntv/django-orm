@@ -33,6 +33,11 @@ class Post(models.Model):
         verbose_name_plural = 'посты'
 
 
+class TagQuerySet(models.QuerySet):
+    def popular(self):
+        return self.annotate(posts_count=models.Count('posts')).order_by('-posts_count')
+
+
 class Tag(models.Model):
     title = models.CharField("Тег", max_length=20, unique=True)
 
@@ -44,6 +49,8 @@ class Tag(models.Model):
 
     def get_absolute_url(self):
         return reverse('tag_filter', args={'tag_title': self.slug})
+
+    objects = TagQuerySet.as_manager() 
 
     class Meta:
         ordering = ["title"]
