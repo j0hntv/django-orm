@@ -59,7 +59,9 @@ def index(request):
 
 
 def post_detail(request, slug):
-    post = Post.objects.get(slug=slug)
+    posts = Post.objects.prefetch_related('author')
+    post = posts.get(slug=slug)
+
     comments = Comment.objects.filter(post=post)
     serialized_comments = []
     for comment in comments:
@@ -86,13 +88,12 @@ def post_detail(request, slug):
     }
 
     most_popular_tags = Tag.objects.popular()[:5]
-
-    most_popular_posts = []  # TODO. Как это посчитать?
+    most_popular_posts = posts.popular().fetch_with_comments_count()[:5]
 
     context = {
         'post': serialized_post,
         'popular_tags': [serialize_tag(tag) for tag in most_popular_tags],
-        'most_popular_posts': [serialize_post(post) for post in most_popular_posts],
+        'most_popular_posts': [serialize_post_optimized(post) for post in most_popular_posts],
     }
     return render(request, 'post-details.html', context)
 
