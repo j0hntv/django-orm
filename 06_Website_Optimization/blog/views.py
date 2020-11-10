@@ -60,8 +60,7 @@ def index(request):
     for post in most_fresh_posts:
         post.comments_count = count_for_id[post.id]
 
-    tags = Tag.objects.annotate(tags_count=Count('posts'))
-    most_popular_tags = tags.order_by('-tags_count', 'title')[:5]
+    most_popular_tags = Tag.objects.popular()[:5]
 
     context = {
         'most_popular_posts': [serialize_post_optimized(post) for post in most_popular_posts[:5]],
