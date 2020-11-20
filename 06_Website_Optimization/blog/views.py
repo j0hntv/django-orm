@@ -46,11 +46,11 @@ def index(request):
 
 
 def post_detail(request, slug):
-    tags = Tag.objects.annotate(posts_count=Count('posts'))
-    posts = Post.objects.prefetch_related('author', Prefetch('tags', tags))
+    tags = Tag.objects.popular()
+    posts = Post.objects.popular().prefetch_related('author', Prefetch('tags', tags))
     post = posts.get(slug=slug)
 
-    comments = Comment.objects.filter(post=post)
+    comments = Comment.objects.filter(post=post).prefetch_related('author')
     serialized_comments = []
     for comment in comments:
         serialized_comments.append({
@@ -59,8 +59,6 @@ def post_detail(request, slug):
             'author': comment.author.username,
         })
 
-    likes = post.likes.all()
-
     related_tags = post.tags.all()
 
     serialized_post = {
@@ -68,7 +66,7 @@ def post_detail(request, slug):
         "text": post.text,
         "author": post.author.username,
         "comments": serialized_comments,
-        'likes_amount': len(likes),
+        'likes_amount': post.likes_count,
         "image_url": post.image.url if post.image else None,
         "published_at": post.published_at,
         "slug": post.slug,
